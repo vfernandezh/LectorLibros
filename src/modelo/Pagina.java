@@ -1,0 +1,32 @@
+package modelo;
+
+import java.util.ArrayList;
+
+public class Pagina {
+
+	private long primer;
+	private long ultimo;
+
+	public Pagina(long primer, long ultimo) {
+		super();
+		this.primer = primer;
+		this.ultimo = ultimo;
+	}
+
+	public long getPrimer() {
+		return primer;
+	}
+
+	public long getUltimo() {
+		return ultimo;
+	}
+
+	public void setPrimer(long primer) {
+		this.primer = primer;
+	}
+
+	public void setUltimo(long ultimo) {
+		this.ultimo = ultimo;
+	}
+
+}
