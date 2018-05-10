@@ -15,6 +15,7 @@ public AccionIrAMarca(LectorBridge lectorBridge) {
 @Override
 public void actionPerformed(ActionEvent e) {
 	lectorBridge.getLibro().irAMarca();
+	lectorBridge.actualizarNumeroPagina();
 	
 }
 

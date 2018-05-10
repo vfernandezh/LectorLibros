@@ -16,7 +16,10 @@ public class AccionPaginaAnterior implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		lectorBridge.getLibro().retrocederPagina();
-		
+		lectorBridge.actualizarNumeroPagina();
+		lectorBridge.getLibro().cargarPagina();
+		lectorBridge.mostrarPagina();
+		lectorBridge.getContentPane().updateUI();
 	}
 
 }

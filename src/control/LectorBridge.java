@@ -14,6 +14,8 @@ public class LectorBridge extends LectorUIEjemplo {
 	public LectorBridge() {
 		this.libro = new Libro();
 		establecerListeners();
+		libro.cargarPagina();
+		mostrarPagina();
 	}
 
 	private void establecerListeners() {
@@ -23,16 +25,15 @@ public class LectorBridge extends LectorUIEjemplo {
 		getBtnMarcar().addActionListener(new AccionMarcar(this));
 		
 	}
-
-	public boolean cargarPaginaSiguiente() {
-		getTextArea().setText(String.valueOf(libro.getPaginas().get(libro.getActual() + 1)));
-		return true;
+	
+	
+	public void mostrarPagina() {
+		getTextArea().setText(libro.obtenerLectura());
+	}
+	public void actualizarNumeroPagina() {
+		getLblNumeroPagina().setText(String.valueOf(libro.getActual()));
 	}
 
-	public boolean cargarPaginaAnterior() {
-		getTextArea().setText(String.valueOf(libro.getPaginas().get(libro.getActual() - 1)));
-		return false;
-	}
 
 	public void cargarMarca() {
 		getTextArea().setText(String.valueOf(libro.getPaginas().get(libro.getMarca())));

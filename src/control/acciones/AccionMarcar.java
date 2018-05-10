@@ -16,7 +16,7 @@ public class AccionMarcar implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		lectorBridge.getLibro().marcarPagina();
-		
+		lectorBridge.actualizarNumeroPagina();
 	}
 
 }

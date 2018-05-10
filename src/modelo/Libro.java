@@ -19,32 +19,42 @@ public class Libro implements Legible {
 	private int actual = 0;
 	private int marca = 0;
 	private ArrayList<Pagina> paginas;
+	private char[] array;
 
 	public Libro() {
 		super();
 		lectura = "juegoTronos.txt";
 		paginas = new ArrayList<>();
-		cargarPagina();
+		
 
 	}
 
-	private void cargarPagina() {
-
+	public void cargarPagina() {
 		try {
+			array= new char[400];
 			FileReader fileR = new FileReader(lectura);
 			BufferedReader bufferR = new BufferedReader(fileR);
+			bufferR.read(this.array, actual*400, 400);
+			bufferR.close();
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	public String obtenerLectura() {
+		StringBuilder builder= new StringBuilder();
+		for (int i = 0; i < this.array.length; i++) {
+			builder.append(this.array[i]);
+		}
+		 String lectura=builder.toString();
+		 return lectura;
+	}
 
 	@Override
 	public void avanzarPagina() {
 		if (!comprobarUltimaPagina()) {
-			if (lectorBridge.cargarPaginaSiguiente())
-				actual++;
+			actual++;
 		}
 
 	}
@@ -59,8 +69,7 @@ public class Libro implements Legible {
 	@Override
 	public void retrocederPagina() {
 		if (!comprobarPrimeraPagina()) {
-			if (lectorBridge.cargarPaginaAnterior())
-				actual--;
+			actual--;
 		}
 
 	}
@@ -98,5 +107,10 @@ public class Libro implements Legible {
 	public ArrayList<Pagina> getPaginas() {
 		return paginas;
 	}
+	
+	public char[] getArray() {
+		return array;
+	}
+
 
 }
