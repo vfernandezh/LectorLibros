@@ -9,12 +9,11 @@ import vista.LectorUIEjemplo;
 
 public class LectorBridge extends LectorUIEjemplo {
 	private Libro libro;
-	
 
 	public LectorBridge() {
 		this.libro = new Libro();
 		establecerListeners();
-		libro.cargarPagina();
+		libro.cargarPagina(libro.getActual());
 		mostrarPagina();
 	}
 
@@ -23,26 +22,24 @@ public class LectorBridge extends LectorUIEjemplo {
 		getBtnAtras().addActionListener(new AccionPaginaAnterior(this));
 		getBtnIrAMarca().addActionListener(new AccionIrAMarca(this));
 		getBtnMarcar().addActionListener(new AccionMarcar(this));
-		
+
 	}
-	
-	
+
 	public void mostrarPagina() {
 		getTextArea().setText(libro.obtenerLectura());
 	}
+
 	public void actualizarNumeroPagina() {
 		getLblNumeroPagina().setText(String.valueOf(libro.getActual()));
 	}
 
-
 	public void cargarMarca() {
-		getTextArea().setText(String.valueOf(libro.getPaginas().get(libro.getMarca())));
-		
+		libro.cargarPagina(libro.getActual());
+
 	}
 
 	public Libro getLibro() {
 		return libro;
 	}
-	
 
 }

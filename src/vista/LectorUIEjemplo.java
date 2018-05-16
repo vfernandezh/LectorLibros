@@ -44,7 +44,7 @@ public class LectorUIEjemplo extends JFrame {
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.SOUTH);
 
-		lblNumeroPagina = new JLabel("0");
+		lblNumeroPagina = new JLabel("1");
 		btnAtras = new JButton("<<");
 		btnAlante = new JButton(">>");
 		btnMarcar = new JButton("Marcar");

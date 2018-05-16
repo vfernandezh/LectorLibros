@@ -1,95 +1,79 @@
 package modelo;
 
-import java.awt.TextArea;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-
-import javax.swing.JTextArea;
-
+import java.io.UnsupportedEncodingException;
 import control.LectorBridge;
 
 public class Libro implements Legible {
 
 	private LectorBridge lectorBridge;
 	private String lectura;
-	private int actual = 0;
-	private int marca = 0;
-	private ArrayList<Pagina> paginas;
-	private char[] array;
+	private int actual;
+	private int marca;
+	private byte[] array;
 
 	public Libro() {
 		super();
-		lectura = "juegoTronos.txt";
-		paginas = new ArrayList<>();
-		
+		this.lectura = "JuegoTronos.txt";
+		this.actual = 1;
+		this.marca = 0;
 
 	}
 
-	public void cargarPagina() {
+	public void cargarPagina(int pagina) {
 		try {
-			array= new char[400];
-			FileReader fileR = new FileReader(lectura);
-			BufferedReader bufferR = new BufferedReader(fileR);
-			bufferR.read(this.array, actual*400, 400);
-			bufferR.close();
-
+			array = new byte[600];
+			FileInputStream fileR = new FileInputStream(lectura);
+			for (int i = 0; i < pagina; i++) {
+				fileR.read(this.array);
+			}
+			fileR.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 	public String obtenerLectura() {
-		StringBuilder builder= new StringBuilder();
-		for (int i = 0; i < this.array.length; i++) {
-			builder.append(this.array[i]);
+		try {
+			return new String(this.array, "utf8");
+		} catch (UnsupportedEncodingException e) {
+			return "No se puede cargar la pagina";
 		}
-		 String lectura=builder.toString();
-		 return lectura;
 	}
 
 	@Override
 	public void avanzarPagina() {
-		if (!comprobarUltimaPagina()) {
-			actual++;
-		}
+			this.actual++;
 
 	}
 
-	private boolean comprobarUltimaPagina() {
-		if (actual >= paginas.size()) {
-			return true;
-		}
-		return false;
-	}
 
 	@Override
 	public void retrocederPagina() {
 		if (!comprobarPrimeraPagina()) {
-			actual--;
+			this.actual--;
 		}
 
 	}
 
 	private boolean comprobarPrimeraPagina() {
-		if (actual <= 0) {
-			return true;
-		}
-		return false;
+		return actual == 1;
+		
 	}
 
 	@Override
 	public void marcarPagina() {
-		marca = actual;
+		this.marca = actual;
 
 	}
 
 	@Override
 	public void irAMarca() {
-		lectorBridge.cargarMarca();
+		if (this.marca!=0){
+			this.actual= marca;
+		}
+		
 	}
 
 	public String getLectura() {
@@ -104,13 +88,8 @@ public class Libro implements Legible {
 		return marca;
 	}
 
-	public ArrayList<Pagina> getPaginas() {
-		return paginas;
-	}
-	
-	public char[] getArray() {
+	public byte[] getArray() {
 		return array;
 	}
-
 
 }
